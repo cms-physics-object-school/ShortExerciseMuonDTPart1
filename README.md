@@ -1,1 +1,106 @@
-# ShortExerciseMuonDTPart1
+# DT Short Exercise at CMS POS 2019 (Part 1 - Accessing segment timing) : Full Exercise 
+
+This repository contains the full example code for Part 1 of the DT Short Exercise at CMS POS 2019 : Accessing segment timing.
+
+## Introduction
+
+The instructions for the exercise can be found at :
+[https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideCMSPhysicsObjectSchoolAACHEN2019DT](https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideCMSPhysicsObjectSchoolAACHEN2019DT)
+
+## Instructions
+
+### 1. Create the Working Area
+
+First you must create and set up your working area according to the instructions listed at the [exercise twiki](https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideCMSPhysicsObjectSchoolAACHEN2019DT#Creating_the_Working_Area), skip this part in case you have already set up your working area. The instructions to set up your working area are repeated below.
+
+In case you need to log in to the CMS POS machines at Aachen, otherwise skip the following 2 lines.
+```
+ssh -XY YOURLOGINNAME@portal.physik.rwth-aachen.de
+ssh portal-cmspos
+```
+
+Now source CMSSW, setup your working area and create a GRID proxy.
+
+```
+source /cvmfs/cms.cern.ch/cmsset_default.sh
+mkdir YOURWORKINGAREA_DT
+cd YOURWORKINGAREA_DT
+export SCRAM_ARCH=slc7_amd64_gcc630
+cmsrel CMSSW_9_4_12
+cd CMSSW_9_4_12/src
+cmsenv
+voms-proxy-init --voms cms
+```
+And then enter your GRID password to craete the proxy.
+
+### 2. Clone this repository into your working area
+
+Clone this repo in your working area in the CMSSWxxx/src area into a folder named 'UserCode'
+
+```
+git clone https://github.com/cms-physics-object-school/ShortExerciseMuonDTPart1.git UserCode
+```
+
+### 3. Complete the code : switch to branch with full code
+
+Now you can switch to this branch with the full code named *fullexercise* :  
+
+```
+git checkout origin/fullexercise
+```
+
+The codes for this exercise are : 
+
+The main C++ code is in the file  
+
+```
+CMSPOS/plugins/SegmentTiming.cc
+```
+and the corresponding header file
+
+```
+CMSPOS/plugins/SegmentTiming.h
+```
+
+The python config file can be found at
+
+```
+CMSPOS/test/run_segments.py
+```
+
+### 4. Compile your code
+
+Compile the code from the directory CMSSWxxx/src using the command :
+
+```
+scram b
+```
+
+To compile quicker using 4 cores, you can instead use the command : 
+
+```
+scram b -j 4
+```
+
+### 5. Run the CMSSW code
+
+Use cmsRun to run the code from the directory CMSSWxxx/src using the command :
+
+```
+cmsRun UserCode/CMSPOS/test/run_segments.py
+```
+
+This should produce your root file : segments.root
+
+### 6. Make plots using the root tuple
+
+Now you can make your plots from the root file segments.root using a plotting code based on the (file in this repo)[CMSPOS/test/plot_segments.C] (under your UserCode directory) :
+
+```
+CMSPOS/test/plot_segments.C
+``` 
+
+### 7. Complete the exercise
+
+Complete the exercise following the instructions on the [DT exercise twiki](https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideCMSPhysicsObjectSchoolAACHEN2019DT).
+
